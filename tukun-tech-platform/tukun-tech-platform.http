@@ -1,0 +1,6 @@
+@tukun_tech_platform_HostAddress = http://localhost:5227
+
+GET {{tukun_tech_platform_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
