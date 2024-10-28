@@ -30,7 +30,8 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
         
         
         
-       
+        
+        
         builder.Entity<Patient>().HasKey(f => f.Id);
         builder.Entity<Patient>().Property(f => f.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Entity<Patient>().Property(f => f.Name).IsRequired();
