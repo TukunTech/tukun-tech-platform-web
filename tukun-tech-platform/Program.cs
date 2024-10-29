@@ -10,10 +10,15 @@ using tukun_tech_platform.Tukun.Domain.Services.Doctors;
 using tukun_tech_platform.Tukun.Infrastructure.Repositories.Doctors;
 
 using tukun_tech_platform.Tukun.Application.Internal.CommandServices.Patients;
+using tukun_tech_platform.Tukun.Application.Internal.CommandServices.PendingMedicine;
 using tukun_tech_platform.Tukun.Application.Internal.QueryServices.Patients;
+using tukun_tech_platform.Tukun.Application.Internal.QueryServices.PendingMedicine;
 using tukun_tech_platform.Tukun.Domain.Repositories.Patients;
+using tukun_tech_platform.Tukun.Domain.Repositories.PendingMedicine;
 using tukun_tech_platform.Tukun.Domain.Services.Patients;
+using tukun_tech_platform.Tukun.Domain.Services.PendingMedicine;
 using tukun_tech_platform.Tukun.Infrastructure.Repositories.Patients;
+using tukun_tech_platform.Tukun.Infrastructure.Repositories.PendingMedicine;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -52,6 +57,10 @@ builder.Services.AddScoped<IDoctorCommandService, DoctorCommandService>();
 builder.Services.AddScoped<IPatientQeryService, PatientQueryService>();
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddScoped<IPatientCommandService, PatientCommandService>();
+
+builder.Services.AddScoped<IPendingMedicineQueryService, PendingMedicineQueryService>();
+builder.Services.AddScoped<IPendingMedicineRepository, PendingMedicineRepository>();
+builder.Services.AddScoped<IPendingMedicineCommandService, PendingMedicineCommandService>();
 
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
