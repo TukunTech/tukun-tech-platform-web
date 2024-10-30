@@ -4,6 +4,7 @@ using tukun_tech_platform.Tukun.Domain.Model.Aggregates.Doctors;
 using tukun_tech_platform.Tukun.Domain.Model.Aggregates.Patients;
 using tukun_tech_platform.Tukun.Domain.Model.Aggregates.PendingMedicine;
 using tukun_tech_platform.Tukun.Domain.Model.Aggregates.Elder;
+using tukun_tech_platform.Tukun.Domain.Model.Aggregates.FrequentlyQuestions;
 
 namespace tukun_tech_platform.Shared.Infrastructure.EFC.Configuration;
 
@@ -63,6 +64,12 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
         builder.Entity<Elder>().Property(f => f.NumberPolicies).IsRequired();
         builder.Entity<Elder>().Property(f => f.Insurance).IsRequired();
         builder.Entity<Elder>().Property(f => f.Allergies).IsRequired();
+        
+        builder.Entity<FrequentlyQuestions>().HasKey(f => f.Id);
+        builder.Entity<FrequentlyQuestions>().Property(f => f.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<FrequentlyQuestions>().Property(f => f.Text).IsRequired();
+
+        
     }
     
 }

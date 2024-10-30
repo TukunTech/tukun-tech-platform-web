@@ -21,10 +21,15 @@ using tukun_tech_platform.Tukun.Infrastructure.Repositories.Patients;
 using tukun_tech_platform.Tukun.Infrastructure.Repositories.PendingMedicine;
 
 using tukun_tech_platform.Tukun.Application.Internal.CommandServices.Elders;
+using tukun_tech_platform.Tukun.Application.Internal.CommandServices.FrequentlyQuestions;
 using tukun_tech_platform.Tukun.Application.Internal.QueryServices.Elders;
+using tukun_tech_platform.Tukun.Application.Internal.QueryServices.FrequentlyQuestions;
 using tukun_tech_platform.Tukun.Domain.Repositories.Elders;
+using tukun_tech_platform.Tukun.Domain.Repositories.FrequentlyQuestions;
 using tukun_tech_platform.Tukun.Domain.Services.Elders;
+using tukun_tech_platform.Tukun.Domain.Services.FrequentlyQuestions;
 using tukun_tech_platform.Tukun.Infrastructure.Repositories.Elders;
+using tukun_tech_platform.Tukun.Infrastructure.Repositories.FrequentlyQuestions;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -71,6 +76,15 @@ builder.Services.AddScoped<IPendingMedicineCommandService, PendingMedicineComman
 builder.Services.AddScoped<IEldersQueryService, ElderQueryService>();
 builder.Services.AddScoped<IEldersRepository, ElderRepository>();
 builder.Services.AddScoped<IElderCommandService, ElderCommandService>();
+
+
+builder.Services.AddScoped<IFrequentlyQuestionsQueryService, FrequentlyQuestionsQueryService>();
+builder.Services.AddScoped<IFrequentlyQuestionsRepository, FrequentlyQuestionsRepository>();
+builder.Services.AddScoped<IFrequentlyQuestionsCommandService, FrequentlyQuestionsCommandService>();
+
+
+
+
 
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
