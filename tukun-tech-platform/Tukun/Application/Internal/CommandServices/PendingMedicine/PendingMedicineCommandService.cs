@@ -31,7 +31,7 @@ public class PendingMedicineCommandService : IPendingMedicineCommandService
         }
         catch (Exception e)
         {
-            return null; // Manejo de errores, considerar más información en el registro.
+            return null; 
         }
         return pendingMedicine;
     }
