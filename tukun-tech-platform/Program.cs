@@ -20,6 +20,12 @@ using tukun_tech_platform.Tukun.Domain.Services.PendingMedicine;
 using tukun_tech_platform.Tukun.Infrastructure.Repositories.Patients;
 using tukun_tech_platform.Tukun.Infrastructure.Repositories.PendingMedicine;
 
+using tukun_tech_platform.Tukun.Application.Internal.CommandServices.Elders;
+using tukun_tech_platform.Tukun.Application.Internal.QueryServices.Elders;
+using tukun_tech_platform.Tukun.Domain.Repositories.Elders;
+using tukun_tech_platform.Tukun.Domain.Services.Elders;
+using tukun_tech_platform.Tukun.Infrastructure.Repositories.Elders;
+
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
@@ -61,6 +67,10 @@ builder.Services.AddScoped<IPatientCommandService, PatientCommandService>();
 builder.Services.AddScoped<IPendingMedicineQueryService, PendingMedicineQueryService>();
 builder.Services.AddScoped<IPendingMedicineRepository, PendingMedicineRepository>();
 builder.Services.AddScoped<IPendingMedicineCommandService, PendingMedicineCommandService>();
+
+builder.Services.AddScoped<IEldersQueryService, ElderQueryService>();
+builder.Services.AddScoped<IEldersRepository, ElderRepository>();
+builder.Services.AddScoped<IElderCommandService, ElderCommandService>();
 
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())

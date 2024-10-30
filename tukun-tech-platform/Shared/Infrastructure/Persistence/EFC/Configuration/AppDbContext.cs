@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using tukun_tech_platform.Tukun.Domain.Model.Aggregates.Doctors;
 using tukun_tech_platform.Tukun.Domain.Model.Aggregates.Patients;
 using tukun_tech_platform.Tukun.Domain.Model.Aggregates.PendingMedicine;
+using tukun_tech_platform.Tukun.Domain.Model.Aggregates.Elder;
 
 namespace tukun_tech_platform.Shared.Infrastructure.EFC.Configuration;
 
@@ -50,7 +51,18 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
         builder.Entity<PendingMedicine>().Property(f => f.Dose).IsRequired();
         builder.Entity<PendingMedicine>().Property(f => f.DueDate).IsRequired();
 
-        
+        builder.Entity<Elder>().HasKey(f => f.Id);
+        builder.Entity<Elder>().Property(f => f.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Elder>().Property(f => f.Name).IsRequired();
+        builder.Entity<Elder>().Property(f => f.LastName).IsRequired();
+        builder.Entity<Elder>().Property(f => f.Dni).IsRequired();
+        builder.Entity<Elder>().Property(f => f.Gender).IsRequired();
+        builder.Entity<Elder>().Property(f => f.Age).IsRequired();
+        builder.Entity<Elder>().Property(f => f.BloodType).IsRequired();
+        builder.Entity<Elder>().Property(f => f.Nationality).IsRequired();
+        builder.Entity<Elder>().Property(f => f.NumberPolicies).IsRequired();
+        builder.Entity<Elder>().Property(f => f.Insurance).IsRequired();
+        builder.Entity<Elder>().Property(f => f.Allergies).IsRequired();
     }
     
 }
