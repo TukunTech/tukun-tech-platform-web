@@ -29,7 +29,7 @@ public class PendingMedicineController : ControllerBase
         OperationId = "CreatePendingMedicine")]
     [SwaggerResponse(201, "The Pending Medicine was created", typeof(PendingMedicineResource))]
     [SwaggerResponse(400, "Bad request")]
-    public async Task<ActionResult<PendingMedicineResource>> CreatePatient([FromBody] CreatePendingMedicineResource resource)
+    public async Task<ActionResult<PendingMedicineResource>> CreatePendingMedicine([FromBody] CreatePendingMedicineResource resource)
     {
         var createPendingCommand = CreatePendingMedicineCommandFromResourceAssembler.ToCommandFromResource(resource);
         var result = await pendingMedicineCommandService.Handle(createPendingCommand);
@@ -39,7 +39,7 @@ public class PendingMedicineController : ControllerBase
             return BadRequest("Failed to create pending medicine.");
         }
 
-        return CreatedAtAction(nameof(CreatePatient), new { Id = result.Id }, 
+        return CreatedAtAction(nameof(CreatePendingMedicine), new { Id = result.Id }, 
             PendingMedicineFromEntityAssembler.ToResourceFromEntity(result));
     }
 }
