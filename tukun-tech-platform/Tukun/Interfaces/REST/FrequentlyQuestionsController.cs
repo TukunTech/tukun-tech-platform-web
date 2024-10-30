@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using tukun_tech_platform.Tukun.Application.Internal.CommandServices.FrequentlyQuestions;
 using tukun_tech_platform.Tukun.Application.Internal.QueryServices.FrequentlyQuestions;
 using tukun_tech_platform.Tukun.Domain.Model.Queries.FrequentlyQuestions;
 using tukun_tech_platform.Tukun.Domain.Services.FrequentlyQuestions;
@@ -17,10 +18,12 @@ namespace tukun_tech_platform.Tukun.Interfaces.REST;
 public class FrequentlyQuestionsController : ControllerBase 
 {
     private readonly IFrequentlyQuestionsQueryService _frequentlyQuestionsQueryService;
+    private readonly IFrequentlyQuestionsCommandService _frequentlyQuestionsCommandService;
 
-    public FrequentlyQuestionsController(IFrequentlyQuestionsQueryService frequentlyQuestionsQueryService)
+    public FrequentlyQuestionsController(IFrequentlyQuestionsQueryService frequentlyQuestionsQueryService, IFrequentlyQuestionsCommandService frequentlyQuestionsCommandService)
     {
         _frequentlyQuestionsQueryService = frequentlyQuestionsQueryService;
+        _frequentlyQuestionsCommandService = frequentlyQuestionsCommandService;
     }
 
     [HttpGet]
@@ -37,5 +40,30 @@ public class FrequentlyQuestionsController : ControllerBase
         var resource = FrequentlyQuestionsResourceFromEntityAssembler.ToResourceFromEntity(result);
         return Ok(resource); 
     }
+    
+    
+    [HttpPost]
+    [SwaggerOperation(
+        Summary = "Create a Frequently Question",
+        Description = "Create a Frequently Question",
+        OperationId = "CreateFrequentlyQuestion")]
+    [SwaggerResponse(201, "The Frequently Question was created", typeof(FrequentlyQuestionsResource))]
+    [SwaggerResponse(400, "Bad request")]
+    public async Task<ActionResult<FrequentlyQuestionsResource>> CreateFrequentlyQuestions([FromBody] CreateFrequentlyQuestionResource resource)
+    {
+        var createFrequentlyQuestionsCommand = CreateFrequentlyQuestionsCommandFromResourceAssembler.ToCommandFromResource(resource);
+        var result = await _frequentlyQuestionsCommandService.Handle(createFrequentlyQuestionsCommand);
+        
+        if (result == null) 
+        {
+            return BadRequest("Failed to create .");
+        }
+
+        return CreatedAtAction(nameof(CreateFrequentlyQuestions), new { Id = result.Id }, 
+            FrequentlyQuestionsResourceFromEntityAssembler.ToResourceFromEntity(result));
+    }
+    
+    
+    
     
 }
