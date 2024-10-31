@@ -8,7 +8,7 @@ using tukun_tech_platform.Tukun.Interfaces.REST.Transform.PendingMedicine;
 namespace tukun_tech_platform.Tukun.Interfaces.REST;
 
 [ApiController]
-[Route("api/v1/[controller]")]
+[Route("api/v1/adultos-mayores")]
 [Produces(MediaTypeNames.Application.Json)]
 [Tags("Pending Medicine")]
 public class PendingMedicineController : ControllerBase
@@ -22,7 +22,7 @@ public class PendingMedicineController : ControllerBase
         this.pendingMedicineQueryService = pendingMedicineQueryService;
     }
 
-    [HttpPost]
+    [HttpPost("{id}/pending-medicine")]
     [SwaggerOperation(
         Summary = "Create a Pending Medicine",
         Description = "Create a Pending Medicine",
