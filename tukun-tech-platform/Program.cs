@@ -3,6 +3,7 @@ using tukun_tech_platform.Shared.Domain.Repositories;
 using tukun_tech_platform.Shared.Infrastructure.EFC.Configuration;
 using tukun_tech_platform.Shared.Infrastructure.EFC.Repositories;
 using tukun_tech_platform.Shared.Infrastructure.Interfaces.ASP.Configuration;
+using tukun_tech_platform.Tukun.Application.Internal.CommandServices.CriticalAlerts;
 using tukun_tech_platform.Tukun.Application.Internal.CommandServices.Doctors;
 using tukun_tech_platform.Tukun.Application.Internal.QueryServices.Doctors;
 using tukun_tech_platform.Tukun.Domain.Repositories.Doctors;
@@ -22,12 +23,15 @@ using tukun_tech_platform.Tukun.Infrastructure.Repositories.PendingMedicine;
 
 using tukun_tech_platform.Tukun.Application.Internal.CommandServices.Elders;
 using tukun_tech_platform.Tukun.Application.Internal.CommandServices.FrequentlyQuestions;
+using tukun_tech_platform.Tukun.Application.Internal.QueryServices.CriticalAlerts;
 using tukun_tech_platform.Tukun.Application.Internal.QueryServices.Elders;
 using tukun_tech_platform.Tukun.Application.Internal.QueryServices.FrequentlyQuestions;
 using tukun_tech_platform.Tukun.Domain.Repositories.Elders;
 using tukun_tech_platform.Tukun.Domain.Repositories.FrequentlyQuestions;
+using tukun_tech_platform.Tukun.Domain.Services.CriticalAlerts;
 using tukun_tech_platform.Tukun.Domain.Services.Elders;
 using tukun_tech_platform.Tukun.Domain.Services.FrequentlyQuestions;
+using tukun_tech_platform.Tukun.Infrastructure.Repositories.CriticalAlerts;
 using tukun_tech_platform.Tukun.Infrastructure.Repositories.Elders;
 using tukun_tech_platform.Tukun.Infrastructure.Repositories.FrequentlyQuestions;
 
@@ -81,6 +85,11 @@ builder.Services.AddScoped<IElderCommandService, ElderCommandService>();
 builder.Services.AddScoped<IFrequentlyQuestionsQueryService, FrequentlyQuestionsQueryService>();
 builder.Services.AddScoped<IFrequentlyQuestionsRepository, FrequentlyQuestionsRepository>();
 builder.Services.AddScoped<IFrequentlyQuestionsCommandService, FrequentlyQuestionsCommandService>();
+
+
+builder.Services.AddScoped<ICriticalAlertsQueryService, CriticalAlertsQueryService>();
+builder.Services.AddScoped<ICriticalAlertsRepository, CriticalAlertsRepository>();
+builder.Services.AddScoped<ICriticalAlertsCommandService, CriticalAlertsCommandService>();
 
 
 
