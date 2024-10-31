@@ -67,6 +67,8 @@ else if (builder.Environment.IsProduction())
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IDoctorRepository, DoctorRepository>();
 builder.Services.AddScoped<IDoctorCommandService, DoctorCommandService>();
+builder.Services.AddScoped<IDoctorQueryService, DoctorQueryService>();
+
 
 
 builder.Services.AddScoped<IPatientQeryService, PatientQueryService>();
