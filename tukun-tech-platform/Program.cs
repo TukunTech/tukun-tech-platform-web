@@ -22,17 +22,22 @@ using tukun_tech_platform.Tukun.Infrastructure.Repositories.Patients;
 using tukun_tech_platform.Tukun.Infrastructure.Repositories.PendingMedicine;
 
 using tukun_tech_platform.Tukun.Application.Internal.CommandServices.Elders;
+using tukun_tech_platform.Tukun.Application.Internal.CommandServices.EmergencyNumbers;
 using tukun_tech_platform.Tukun.Application.Internal.CommandServices.FrequentlyQuestions;
 using tukun_tech_platform.Tukun.Application.Internal.QueryServices.CriticalAlerts;
 using tukun_tech_platform.Tukun.Application.Internal.QueryServices.Elders;
+using tukun_tech_platform.Tukun.Application.Internal.QueryServices.EmergencyNumbers;
 using tukun_tech_platform.Tukun.Application.Internal.QueryServices.FrequentlyQuestions;
 using tukun_tech_platform.Tukun.Domain.Repositories.Elders;
+using tukun_tech_platform.Tukun.Domain.Repositories.EmergencyNumbers;
 using tukun_tech_platform.Tukun.Domain.Repositories.FrequentlyQuestions;
 using tukun_tech_platform.Tukun.Domain.Services.CriticalAlerts;
 using tukun_tech_platform.Tukun.Domain.Services.Elders;
+using tukun_tech_platform.Tukun.Domain.Services.EmergencyNumbers;
 using tukun_tech_platform.Tukun.Domain.Services.FrequentlyQuestions;
 using tukun_tech_platform.Tukun.Infrastructure.Repositories.CriticalAlerts;
 using tukun_tech_platform.Tukun.Infrastructure.Repositories.Elders;
+using tukun_tech_platform.Tukun.Infrastructure.Repositories.EmergencyNumbers;
 using tukun_tech_platform.Tukun.Infrastructure.Repositories.FrequentlyQuestions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -74,6 +79,10 @@ builder.Services.AddScoped<IDoctorQueryService, DoctorQueryService>();
 builder.Services.AddScoped<IPatientQeryService, PatientQueryService>();
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddScoped<IPatientCommandService, PatientCommandService>();
+
+builder.Services.AddScoped<IEmergencyNumbersQueryService, EmergencyNumbersQueryService>();
+builder.Services.AddScoped<IEmergencyNumbersRepository, EmergencyNumbersRepository>();
+builder.Services.AddScoped<IEmergencyNumbersCommandService, EmergencyNumbersCommandService>();
 
 builder.Services.AddScoped<IPendingMedicineQueryService, PendingMedicineQueryService>();
 builder.Services.AddScoped<IPendingMedicineRepository, PendingMedicineRepository>();

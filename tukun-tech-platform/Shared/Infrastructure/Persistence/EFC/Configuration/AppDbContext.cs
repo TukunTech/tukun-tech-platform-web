@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using tukun_tech_platform.Tukun.Domain.Model.Aggregates.CriticalAlerts;
 using tukun_tech_platform.Tukun.Domain.Model.Aggregates.Doctors;
 using tukun_tech_platform.Tukun.Domain.Model.Aggregates.Patients;
+using tukun_tech_platform.Tukun.Domain.Model.Aggregates.EmergencyNumbers;
 using tukun_tech_platform.Tukun.Domain.Model.Aggregates.PendingMedicine;
 using tukun_tech_platform.Tukun.Domain.Model.Aggregates.Elder;
 using tukun_tech_platform.Tukun.Domain.Model.Aggregates.FrequentlyQuestions;
@@ -46,6 +47,9 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
         builder.Entity<Patient>().Property(f => f.Insurance).IsRequired();
         builder.Entity<Patient>().Property(f => f.AlLergies).IsRequired();
         
+        builder.Entity<EmergencyNumbers>().HasKey(f => f.Id);
+        builder.Entity<EmergencyNumbers>().Property(f => f.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<EmergencyNumbers>().Property(f => f.Number).IsRequired();
 
         builder.Entity<PendingMedicine>().HasKey(f => f.Id);
         builder.Entity<PendingMedicine>().Property(f => f.Id).IsRequired().ValueGeneratedOnAdd();
