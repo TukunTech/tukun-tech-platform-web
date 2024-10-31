@@ -12,7 +12,7 @@ using tukun_tech_platform.Tukun.Interfaces.REST.Transform.FrequentlyQuestions;
 namespace tukun_tech_platform.Tukun.Interfaces.REST;
 
 [ApiController]
-[Route("api/v1/[controller]")]
+[Route("api/v1/soporte")]
 [Produces(MediaTypeNames.Application.Json)]
 [Tags("Frequently Questions")]
 public class FrequentlyQuestionsController : ControllerBase 
@@ -26,7 +26,7 @@ public class FrequentlyQuestionsController : ControllerBase
         _frequentlyQuestionsCommandService = frequentlyQuestionsCommandService;
     }
 
-    [HttpGet]
+    [HttpGet("faqs")]
     [SwaggerOperation(
         Summary = "Gets a frequently question according to parameters",
         Description = "Gets a frequently question for given parameters",
@@ -42,7 +42,7 @@ public class FrequentlyQuestionsController : ControllerBase
     }
     
     
-    [HttpPost]
+    [HttpPost("mensaje")]
     [SwaggerOperation(
         Summary = "Create a Frequently Question",
         Description = "Create a Frequently Question",
