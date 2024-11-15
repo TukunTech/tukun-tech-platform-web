@@ -1,5 +1,6 @@
 using EntityFrameworkCore.CreatedUpdatedDate.Extensions;
 using Microsoft.EntityFrameworkCore;
+using tukun_tech_platform.IAM.Domain.Model.Aggregates;
 using tukun_tech_platform.Tukun.Domain.Model.Aggregates.CriticalAlerts;
 using tukun_tech_platform.Tukun.Domain.Model.Aggregates.Doctors;
 using tukun_tech_platform.Tukun.Domain.Model.Aggregates.Patients;
@@ -78,7 +79,11 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
         builder.Entity<CriticalAlerts>().Property(f => f.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Entity<CriticalAlerts>().Property(f => f.Message).IsRequired();
 
-        
+        builder.Entity<User>().HasKey(u => u.Id);
+        builder.Entity<User>().Property(u => u.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<User>().Property(u => u.Username).IsRequired();
+        builder.Entity<User>().Property(u => u.PasswordHash).IsRequired();
+
         
     }
     
