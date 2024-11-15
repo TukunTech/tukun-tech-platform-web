@@ -1,4 +1,17 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using tukun_tech_platform.IAM.Application.Internal.CommandServices;
+using tukun_tech_platform.IAM.Application.Internal.OutboundServices;
+using tukun_tech_platform.IAM.Application.Internal.QueryServices;
+using tukun_tech_platform.IAM.Domain.Repositories;
+using tukun_tech_platform.IAM.Domain.Services;
+using tukun_tech_platform.IAM.Infrastructure.Hashing.BCrypt.Services;
+using tukun_tech_platform.IAM.Infrastructure.Persistence.EFC.Repositories;
+using tukun_tech_platform.IAM.Infrastructure.Pipeline.Middleware.Extensions;
+using tukun_tech_platform.IAM.Infrastructure.Tokens.JWT.Configuration;
+using tukun_tech_platform.IAM.Infrastructure.Tokens.JWT.Services;
+using tukun_tech_platform.IAM.Interfaces.ACL;
+using tukun_tech_platform.IAM.Interfaces.ACL.Services;
 using tukun_tech_platform.Shared.Domain.Repositories;
 using tukun_tech_platform.Shared.Infrastructure.EFC.Configuration;
 using tukun_tech_platform.Shared.Infrastructure.EFC.Repositories;
@@ -39,7 +52,6 @@ using tukun_tech_platform.Tukun.Infrastructure.Repositories.CriticalAlerts;
 using tukun_tech_platform.Tukun.Infrastructure.Repositories.Elders;
 using tukun_tech_platform.Tukun.Infrastructure.Repositories.EmergencyNumbers;
 using tukun_tech_platform.Tukun.Infrastructure.Repositories.FrequentlyQuestions;
-
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
@@ -47,7 +59,51 @@ builder.Services.AddControllers(options => options.Conventions.Add(new
     KebabCaseRouteNamingConvention()));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options => options.EnableAnnotations());
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1",
+        new OpenApiInfo
+        {
+            Title = "TukunTech.API",
+            Version = "v1",
+            Description = "TukunTech Platform API",
+            TermsOfService = new Uri("https://tukuntech.com/tos"),
+            Contact = new OpenApiContact
+            {
+                Name = "Tukuntech",
+                Email = "contact@tukuntech.com"
+            },
+            License = new OpenApiLicense
+            {
+                Name = "Apache 2.0",
+                Url = new Uri("https://www.apache.org/licenses/LICENSE-2.0.html")
+            }
+        });
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please enter token",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        BearerFormat = "JWT",
+        Scheme = "bearer"
+    });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Id = "Bearer",
+                    Type = ReferenceType.SecurityScheme
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+    options.EnableAnnotations();
+});
 //DB
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 if (connectionString is null)
@@ -102,6 +158,26 @@ builder.Services.AddScoped<ICriticalAlertsQueryService, CriticalAlertsQueryServi
 builder.Services.AddScoped<ICriticalAlertsRepository, CriticalAlertsRepository>();
 builder.Services.AddScoped<ICriticalAlertsCommandService, CriticalAlertsCommandService>();
 
+builder.Services.Configure<TokenSettings>(builder.Configuration.GetSection("TokenSettings"));
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserCommandService, UserCommandService>();
+builder.Services.AddScoped<IUserQueryService, UserQueryService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IHashingService, HashingService>();
+builder.Services.AddScoped<IIamContextFacade, IamContextFacade>();
+
+
+
+// Add CORS Policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllPolicy",
+        policy => policy.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
+
 
 
 
@@ -119,6 +195,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseRequestAuthorization();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
